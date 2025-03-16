@@ -13,28 +13,61 @@
         button {
             padding: 10px 20px;
             font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .counter {
+            font-size: 24px;
+            margin: 20px;
         }
     </style>
 </head>
 <body>
     <h1>计数器</h1>
-    <p>当前计数: <span id="count">0</span></p>
+    <p class="counter">当前计数: <span id="count">0</span></p>
     <button onclick="increment()">增加</button>
 
     <script>
         async function fetchCount() {
-            const response = await fetch('/api/counter');
-            const data = await response.json();
-            document.getElementById('count').textContent = data.count;
+            try {
+                const response = await fetch('/api/counter');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                document.getElementById('count').textContent = data.count;
+            } catch (error) {
+                console.error('获取计数失败:', error);
+            }
         }
 
         async function increment() {
-            await fetch('/api/counter', { method: 'POST' });
-            fetchCount();
+            try {
+                const response = await fetch('/api/counter', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                await fetchCount();
+            } catch (error) {
+                console.error('增加计数失败:', error);
+            }
         }
 
         // 页面加载时获取初始计数
-        fetchCount();
+        document.addEventListener('DOMContentLoaded', fetchCount);
     </script>
 </body>
 </html>
+
