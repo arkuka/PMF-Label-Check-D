@@ -1,21 +1,9 @@
 {
     "name": "simple-vercel-app",
     "version": "1.0.0",
-    "private": true,
-    "scripts": {
-      "dev": "next dev",
-      "build": "next build",
-      "start": "node api/counter.js",
-      "lint": "next lint"
-    },
     "dependencies": {},
-    "devDependencies": {
-      "@types/node": "^22",
-      "@types/react": "^18",
-      "@types/react-dom": "^18",
-      "postcss": "^8",
-      "tailwindcss": "^3.4.17",
-      "typescript": "^5"
+    "scripts": {
+      "start": "node api/counter.js"
     }
   }
   
