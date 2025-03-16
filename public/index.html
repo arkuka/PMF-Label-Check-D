@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单计数器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>计数器</h1>
+    <p>当前计数: <span id="count">0</span></p>
+    <button onclick="increment()">增加</button>
+
+    <script>
+        async function fetchCount() {
+            const response = await fetch('/api/counter');
+            const data = await response.json();
+            document.getElementById('count').textContent = data.count;
+        }
+
+        async function increment() {
+            await fetch('/api/counter', { method: 'POST' });
+            fetchCount();
+        }
+
+        // 页面加载时获取初始计数
+        fetchCount();
+    </script>
+</body>
+</html>
